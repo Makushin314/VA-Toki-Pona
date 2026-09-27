@@ -18,8 +18,8 @@
     let currentLessons = null;
     let rootEl = null;
 
-    /* ─── SITELEN PONA — состояние режима ─── */
-    const SP_KEY = 'va_tp_lesson_sp';
+    /* ─── SITELEN PONA — состояние режима (единый ключ) ─── */
+    const SP_KEY = 'va_tp_sp_mode';
 
     function loadSpMode() {
         try { return localStorage.getItem(SP_KEY) === '1'; }
@@ -62,7 +62,13 @@
                 }
             });
         }
-
+                /* Синхронизация с тумблером в топ-баре */
+        if (!document.documentElement.hasAttribute('data-lesson-sp-sync')) {
+            document.documentElement.setAttribute('data-lesson-sp-sync', '1');
+            window.addEventListener('va-sp-mode-change', function (e) {
+                applySpMode(e.detail.on);
+            });
+        }
         handleHash();
     }
 

@@ -5,6 +5,20 @@
 (function (global) {
     'use strict';
 
+        /* ─── SITELEN PONA — единый ключ ─── */
+    const SP_KEY = 'va_tp_sp_mode';
+
+    function readSpMode() {
+        try { return localStorage.getItem(SP_KEY) === '1'; }
+        catch (e) { return false; }
+    }
+    function writeSpMode(on) {
+        try { localStorage.setItem(SP_KEY, on ? '1' : '0'); } catch (e) {}
+    }
+    function broadcastSpMode(on) {
+        window.dispatchEvent(new CustomEvent('va-sp-mode-change', { detail: { on: on } }));
+    }
+
     const THEMES = {
         dark: {
             name: 'Тёмная', icon: '🌙',
@@ -142,7 +156,7 @@
         document.documentElement.setAttribute('data-nav-ready', '1');
     }
 
-    function initTopDropdown() {
+        function initTopDropdown() {
         const nav = document.getElementById('nav');
         if (!nav) { markNavReady(); return; }
         if (nav.dataset.dropdownReady === '1') { markNavReady(); return; }
@@ -172,6 +186,33 @@
         toggle.className = 'nav-btn nav-dropdown-toggle';
         toggle.setAttribute('aria-label', 'Ещё');
         toggle.innerHTML = '<span class="nav-icon">☰</span><span class="nav-label">Ещё</span>';
+
+        /* ─── SITELEN PONA TOGGLE — рядом с Home ─── */
+        const spToggle = document.createElement('button');
+        spToggle.type = 'button';
+        spToggle.className = 'nav-btn nav-sp-toggle';
+        spToggle.id = 'navSpToggle';
+        spToggle.setAttribute('aria-label', 'sitelen pona');
+        spToggle.title = 'Переключить sitelen pona (клавиша S)';
+        spToggle.innerHTML =
+            '<span class="nav-sp-switch"></span>' +
+            '<span class="nav-sp-icon">toki</span>' +
+            '<span class="nav-sp-label">sitelen pona</span>';
+
+        homeBtn.insertAdjacentElement('afterend', spToggle);
+
+        if (readSpMode()) spToggle.classList.add('active');
+
+        spToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const on = !spToggle.classList.contains('active');
+            spToggle.classList.toggle('active', on);
+            writeSpMode(on);
+            broadcastSpMode(on);
+            if (global.VAToast) {
+                global.VAToast.show(on ? 'toki → ✦ sitelen pona' : '✦ sitelen pona → toki');
+            }
+        });
 
         nav.appendChild(toggle);
         nav.appendChild(more);
@@ -285,7 +326,7 @@
         applyWeatherEffect(currentTheme);
     }
 
-    global.VATheme = {
+        global.VATheme = {
         THEMES,
         apply,
         getCurrent: () => currentTheme,
@@ -294,7 +335,16 @@
         applySidebarPos,
         animatePageIn,
         applyWeatherEffect,
-        init
+        init,
+
+        /* ─── SITELEN PONA API ─── */
+        getSpMode: readSpMode,
+        setSpMode: function (on) {
+            writeSpMode(on);
+            const btn = document.getElementById('navSpToggle');
+            if (btn) btn.classList.toggle('active', on);
+            broadcastSpMode(on);
+        }
     };
 
 })(window);
