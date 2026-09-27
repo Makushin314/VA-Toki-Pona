@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!--
+  ═══════════════════════════════════════════════════════════════
+  VA TOKI PONA — КУРС NANPA TU
+  Экосистема Vulpeto Abeleto · 2026
+  ═══════════════════════════════════════════════════════════════
+  7 уроков: частицы la, pi, en, anu, o, seme. 50 слов.
+  ═══════════════════════════════════════════════════════════════
+-->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Курс nanpa tu toki pona — 7 уроков: частицы, эмоции, вопросы, цвета. 50 слов." />
+<title>nanpa tu — VA Toki Pona</title>
+<link rel="icon" href="../images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="../css/main.css" />
+<link rel="stylesheet" href="../css/sidebar.css" />
+<link rel="stylesheet" href="../css/lesson.css" />
+
+<script>
+(function () {
+    try {
+        var THEMES = {
+            dark:   { '--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            light:  { '--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            winter: { '--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75' },
+            forest: { '--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B' },
+            autumn: { '--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B' },
+            cat:    { '--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75' }
+        };
+        var root = document.documentElement;
+        var themeKey = localStorage.getItem('va_tp_theme') || 'dark';
+        var theme = THEMES[themeKey] || THEMES.dark;
+        root.setAttribute('data-theme-key', themeKey);
+        for (var k in theme) {
+            if (Object.prototype.hasOwnProperty.call(theme, k)) {
+                root.style.setProperty(k, theme[k]);
+            }
+        }
+        var pos = localStorage.getItem('va_tp_sidebar_pos');
+        if (!pos) pos = window.innerWidth <= 700 ? 'top' : 'left';
+        if (pos !== 'left' && pos !== 'top') pos = 'left';
+        root.setAttribute('data-sidebar-pos', pos);
+
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="../index.html" title="VA Toki Pona — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Toki Pona</h1>
+            <span>o kama sona</span>
+        </div>
+    </a>
+
+    <nav id="nav">
+        <a class="nav-btn" href="../index.html" title="Главная">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </a>
+
+        <div class="nav-section-label">Обучение</div>
+        <a class="nav-btn" href="tp1.html" title="nanpa wan">
+            <span class="nav-icon">🔵</span>
+            <span class="nav-label">Уровень 1</span>
+            <span class="nav-badge" id="navBadgeTP1">0/8</span>
+        </a>
+        <a class="nav-btn active" href="tp2.html" title="nanpa tu">
+            <span class="nav-icon">🟣</span>
+            <span class="nav-label">Уровень 2</span>
+            <span class="nav-badge" id="navBadgeTP2">0/7</span>
+        </a>
+        <a class="nav-btn" href="tp3.html" title="nanpa mute">
+            <span class="nav-icon">🟡</span>
+            <span class="nav-label">Уровень 3</span>
+            <span class="nav-badge" id="navBadgeTP3">0/6</span>
+        </a>
+
+        <div class="nav-section-label">Инструменты</div>
+        <a class="nav-btn" href="../grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="../flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span>
+            <span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/137</span>
+        </a>
+        <a class="nav-btn" href="../phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span>
+            <span class="nav-label">Фразы</span>
+        </a>
+
+        <div class="nav-section-label">Ещё</div>
+        <a class="nav-btn" href="../index.html#settings" title="Настройки">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Настройки</span>
+        </a>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+    <div id="courseRoot"></div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="../data/courses-tp1.js"></script>
+<script src="../data/courses-tp2.js"></script>
+<script src="../data/courses-tp3.js"></script>
+<script src="../data/words.js"></script>
+
+<script src="../js/ui.js"></script>
+<script src="../js/core.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/lesson-engine.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    VACore.init();
+    VATheme.init();
+    VALessonEngine.mount('tp2', window.LESSONS_TP2);
+    VACore.updateNavBadges();
+});
+</script>
+
+</body>
+</html>
