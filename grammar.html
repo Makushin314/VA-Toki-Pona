@@ -1632,7 +1632,7 @@ body.sp-mode .grammar-article-body span[style*="var(--danger)"] {
 (function () {
     'use strict';
 
-    const STORAGE_KEY = 'va_tp_grammar_sp';
+    const STORAGE_KEY = 'va_tp_sp_mode';
     const $toggle = document.getElementById('grSpToggle');
     if (!$toggle) return;
 
@@ -1668,6 +1668,11 @@ body.sp-mode .grammar-article-body span[style*="var(--danger)"] {
             e.preventDefault();
             $toggle.click();
         }
+    });
+        /* Синхронизация с тумблером в топ-баре */
+    window.addEventListener('va-sp-mode-change', function (e) {
+        spMode = e.detail.on;
+        applySpMode(spMode);
     });
 })();
 </script>

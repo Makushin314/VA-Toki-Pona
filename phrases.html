@@ -968,8 +968,11 @@ function loadState(){
         state.total   = p.total   || 0;
         state.best    = p.best    || 0;
         state.level   = p.level   || 1;
-        state.spMode  = !!p.spMode;
+        /* spMode теперь читается из единого ключа ниже */
     }catch(e){}
+        /* Единый ключ sitelen pona */
+    try { state.spMode = localStorage.getItem('va_tp_sp_mode') === '1'; }
+    catch (e) { state.spMode = false; }
 }
 function saveState(){
     try{
@@ -978,8 +981,7 @@ function saveState(){
             correct: state.correct,
             total:   state.total,
             best:    state.best,
-            level:   state.level,
-            spMode:  state.spMode
+            level:   state.level
         }));
     }catch(e){}
 }
@@ -1169,13 +1171,12 @@ function nextSentence(){
    ═══════════════════════════════════════════════════════════ */
 function toggleSpMode(){
     state.spMode = !state.spMode;
-    saveState();
+    try { localStorage.setItem('va_tp_sp_mode', state.spMode ? '1' : '0'); } catch (e) {}
     applySpMode();
 
-    /* Если сейчас показан правильный ответ — он тоже должен сменить шрифт.
-       Просто перерисовываем содержимое .pf-answer:
-       HTML не меняется, меняется только CSS-класс на .pt-card. */
-    /* Здесь ничего дополнительно делать не нужно — CSS уже применится. */
+    window.dispatchEvent(new CustomEvent('va-sp-mode-change', {
+        detail: { on: state.spMode }
+    }));
 
     if (global.VAToast) {
         global.VAToast.show(state.spMode
@@ -1183,6 +1184,13 @@ function toggleSpMode(){
             : '✦ sitelen pona → toki');
     }
 }
+
+/* Синхронизация с тумблером в топ-баре */
+window.addEventListener('va-sp-mode-change', function (e) {
+    if (e.detail.on === state.spMode) return;
+    state.spMode = e.detail.on;
+    applySpMode();
+});
 
 /* ═══════════════════════════════════════════════════════════
    СОБЫТИЯ
