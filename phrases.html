@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Конструктор фраз toki pona — собирайте осмысленные предложения по схеме S + li + V + e + O." />
+<title>pali toki — VA Toki Pona</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+
+<script>
+(function () {
+    try {
+        var T = {
+            dark:{'--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            light:{'--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F'},
+            winter:{'--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75'},
+            forest:{'--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B'},
+            autumn:{'--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B'},
+            cat:{'--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75'}
+        };
+        var r = document.documentElement;
+        var k = localStorage.getItem('va_tp_theme') || 'dark';
+        var t = T[k] || T.dark;
+        r.setAttribute('data-theme-key', k);
+        for (var i in t) if (t.hasOwnProperty(i)) r.style.setProperty(i, t[i]);
+        var p = localStorage.getItem('va_tp_sidebar_pos');
+        if (!p) p = window.innerWidth<=700 ? 'top' : 'left';
+        if (p!=='left' && p!=='top') p='left';
+        r.setAttribute('data-sidebar-pos', p);
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch(e){}
+})();
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   КОНСТРУКТОР ФРАЗ — стили страницы
+   ═══════════════════════════════════════════════════════════ */
+.pt-page { padding-bottom: 40px; }
+.pt-header { margin-bottom: 20px; }
+.pt-header h2 { font-size: 28px; font-weight: 800; line-height: 1.25; margin-bottom: 4px; }
+.pt-header p { color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 680px; }
+
+/* ─── Статистика ─── */
+.pt-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.pt-stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    transition: transform var(--transition);
+}
+.pt-stat:hover { transform: translateY(-2px); }
+.pt-stat .ps-num { font-size: 22px; font-weight: 900; color: var(--green); line-height: 1.1; }
+.pt-stat.fire .ps-num { color: #FF7043; }
+.pt-stat.gold .ps-num { color: var(--gold); }
+.pt-stat.red .ps-num { color: var(--danger); }
+.pt-stat .ps-lbl { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-weight: 600; }
+
+/* ─── Схема S+li+V+e+O ─── */
+.pt-schema {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+}
+.pt-schema .sch-part {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    white-space: nowrap;
+    font-size: 13px;
+    line-height: 1.3;
+}
+.pt-schema .sch-part.s { background: var(--blue); color: #fff; }
+.pt-schema .sch-part.li { background: var(--green); color: #fff; }
+.pt-schema .sch-part.v { background: var(--purple); color: #fff; }
+.pt-schema .sch-part.e { background: var(--gold); color: #1a1a1a; }
+.pt-schema .sch-part.o { background: #FF7043; color: #fff; }
+.pt-schema .sch-arrow { color: var(--muted); font-size: 16px; font-weight: 700; }
+.pt-schema .sch-note {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+/* ─── Управление ─── */
+.pt-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    align-items: center;
+    justify-content: space-between;
+}
+.pt-controls .pc-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.pt-controls .pc-label {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-right: 4px;
+}
+.pt-chip {
+    background: var(--input);
+    border: 1.5px solid transparent;
+    color: var(--muted);
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+}
+.pt-chip:hover { color: var(--text); border-color: var(--border); }
+.pt-chip.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(0, 160, 0, 0.2);
+}
+
+/* ─── Тумблер sitelen pona ─── */
+.pt-sp-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 13px;
+    background: var(--input);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transition);
+    user-select: none;
+    line-height: 1.3;
+}
+.pt-sp-toggle:hover {
+    border-color: var(--green);
+    color: var(--text);
+}
+.pt-sp-toggle.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(0, 160, 0, 0.25);
+}
+.pt-sp-toggle .sp-switch {
+    position: relative;
+    width: 32px;
+    height: 18px;
+    background: var(--border);
+    border-radius: 9px;
+    flex-shrink: 0;
+    transition: background var(--transition);
+}
+.pt-sp-toggle .sp-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform var(--transition);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.pt-sp-toggle.active .sp-switch {
+    background: rgba(255, 255, 255, 0.35);
+}
+.pt-sp-toggle.active .sp-switch::after {
+    transform: translateX(14px);
+}
+.pt-sp-toggle .sp-glyph-icon {
+    font-family: 'linja-pona', 'Segoe UI Symbol', sans-serif;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--green);
+    transition: color var(--transition);
+    /* Латинское «toki» в linja-pona рендерится как глиф toki */
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1;
+}
+.pt-sp-toggle.active .sp-glyph-icon {
+    color: #fff;
+}
+
+/* ─── Карточка задания ─── */
+.pt-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 30px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.pt-card::before {
+    content: '🧱';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-size: 180px;
+    opacity: 0.03;
+    pointer-events: none;
+    line-height: 1;
+    user-select: none;
+}
+
+.pt-label {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--muted);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.pt-prompt {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+}
+.pt-prompt .pt-hint {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* ─── Слоты ─── */
+.pt-slots {
+    min-height: 76px;
+    background: var(--input);
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 18px;
+    transition: all var(--transition);
+    position: relative;
+    z-index: 1;
+}
+.pt-slots.has-words {
+    border-style: solid;
+    border-color: var(--green);
+    background: rgba(0, 160, 0, 0.05);
+}
+.pt-slots.correct {
+    border-color: var(--green);
+    background: rgba(0, 160, 0, 0.12);
+    box-shadow: 0 0 0 4px rgba(0, 160, 0, 0.15);
+}
+.pt-slots.wrong {
+    border-color: var(--danger);
+    background: rgba(217, 83, 79, 0.1);
+    animation: ptShake 0.4s ease;
+}
+@keyframes ptShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+.pt-slot-placeholder {
+    color: var(--muted);
+    font-size: 13.5px;
+    font-style: italic;
+    opacity: 0.7;
+    padding: 6px 10px;
+}
+.pt-word {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), padding var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+    position: relative;
+}
+.pt-word:hover {
+    background: var(--danger);
+    transform: translateY(-2px);
+}
+.pt-word::after {
+    content: '✕';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--danger);
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.pt-word:hover::after { opacity: 1; }
+
+/* ─── Пул слов ─── */
+.pt-pool-label {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--muted);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+.pt-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+.pt-pool-word {
+    background: var(--input);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+}
+.pt-pool-word:hover:not(:disabled) {
+    border-color: var(--green);
+    color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 160, 0, 0.15);
+}
+.pt-pool-word:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SITELEN PONA РЕЖИМ
+   Когда класс .pt-sp-mode на .pt-card —
+   всё внутри .pt-word и .pt-pool-word рендерится шрифтом
+   linja-pona. OpenType-лигатуры превращают латинские
+   слова (toki, pona, mi…) в глифы sitelen pona.
+   ═══════════════════════════════════════════════════════════ */
+.pt-card.pt-sp-mode .pt-word,
+.pt-card.pt-sp-mode .pt-pool-word {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', sans-serif;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 1;
+    /* Никакого letter-spacing — глифы и так разделены пробелом между словами */
+    letter-spacing: 0;
+    /* Включаем OpenType-лигатуры явно */
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+    /* Центрирование содержимого внутри кнопки */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Симметричные отступы — глифы ровно по центру */
+    padding: 8px 14px;
+    /* Фиксируем минимальную высоту, чтобы кнопки не «прыгали» */
+    min-height: 46px;
+    min-width: 56px;
+    /* Не даём слову переноситься — пусть кнопка растёт */
+    white-space: nowrap;
+}
+
+.pt-card.pt-sp-mode .pt-pool-word {
+    padding: 8px 14px;
+}
+
+.pt-card.pt-sp-mode .pt-word {
+    padding: 8px 18px 8px 14px; /* чуть больше справа — там крестик удаления */
+    background: var(--green);
+    color: #fff;
+}
+
+/* Крестик удаления — обычным шрифтом, без влияния на центрирование */
+.pt-card.pt-sp-mode .pt-word::after {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0;
+}
+
+/* ─── Обратная связь ─── */
+.pt-feedback {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+}
+.pt-feedback.show {
+    display: block;
+    animation: ptFadeIn 0.3s ease;
+}
+@keyframes ptFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.pt-feedback.ok {
+    background: rgba(0, 160, 0, 0.12);
+    color: var(--green);
+    border-left: 4px solid var(--green);
+}
+.pt-feedback.err {
+    background: rgba(217, 83, 79, 0.12);
+    color: var(--danger);
+    border-left: 4px solid var(--danger);
+}
+.pt-feedback .pf-answer {
+    display: block;
+    margin-top: 6px;
+    font-size: 16px;
+    color: var(--text);
+    font-weight: 800;
+}
+/* Правильный ответ в режиме sitelen pona */
+.pt-card.pt-sp-mode .pt-feedback .pf-answer {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+}
+.pt-feedback .pf-note {
+    display: block;
+    margin-top: 4px;
+    font-size: 12.5px;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+/* ─── Кнопки действий ─── */
+.pt-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+.pt-btn {
+    padding: 12px 22px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.pt-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none !important;
+}
+.pt-btn-primary {
+    background: var(--green);
+    color: #fff;
+    flex: 1;
+    min-width: 160px;
+    justify-content: center;
+}
+.pt-btn-primary:hover:not(:disabled) {
+    background: var(--green-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 160, 0, 0.25);
+}
+.pt-btn-secondary {
+    background: var(--card2);
+    color: var(--text);
+}
+.pt-btn-secondary:hover:not(:disabled) {
+    background: var(--border);
+    transform: translateY(-2px);
+}
+.pt-btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+}
+.pt-btn-ghost:hover:not(:disabled) {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.pt-kbd-hint {
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    opacity: 0.7;
+}
+.pt-kbd {
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 1px 7px;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+@media (max-width: 700px) {
+    .pt-header h2 { font-size: 22px; }
+    .pt-card { padding: 20px 18px; }
+    .pt-prompt { font-size: 18px; }
+    .pt-pool-word { padding: 8px 13px; font-size: 13.5px; }
+    .pt-word { padding: 7px 12px; font-size: 13.5px; }
+    .pt-btn { padding: 11px 16px; font-size: 13.5px; }
+    .pt-btn-primary { min-width: 0; width: 100%; }
+    .pt-stats { grid-template-columns: repeat(2, 1fr); }
+    .pt-controls { padding: 10px 12px; gap: 10px; }
+    .pt-chip { padding: 6px 11px; font-size: 12px; }
+    .pt-schema { padding: 12px 14px; gap: 6px; }
+    .pt-schema .sch-part { padding: 4px 9px; font-size: 11.5px; }
+
+    /* Уменьшаем размер глифов на мобильных */
+    .pt-card.pt-sp-mode .pt-word,
+    .pt-card.pt-sp-mode .pt-pool-word {
+        font-size: 24px;
+        padding: 6px 12px;
+        min-height: 40px;
+        min-width: 48px;
+    }
+    .pt-card.pt-sp-mode .pt-feedback .pf-answer {
+        font-size: 26px;
+        letter-spacing: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Toki Pona — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Toki Pona</h1>
+            <span>o kama sona</span>
+        </div>
+    </a>
+    <nav id="nav">
+        <a class="nav-btn" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span><span class="nav-label">Главная</span>
+        </a>
+        <div class="nav-section-label">Обучение</div>
+        <a class="nav-btn" href="courses/tp1.html" title="nanpa wan">
+            <span class="nav-icon">🔵</span><span class="nav-label">Уровень 1</span>
+            <span class="nav-badge" id="navBadgeTP1">0/8</span>
+        </a>
+        <a class="nav-btn" href="courses/tp2.html" title="nanpa tu">
+            <span class="nav-icon">🟣</span><span class="nav-label">Уровень 2</span>
+            <span class="nav-badge" id="navBadgeTP2">0/7</span>
+        </a>
+        <a class="nav-btn" href="courses/tp3.html" title="nanpa mute">
+            <span class="nav-icon">🟡</span><span class="nav-label">Уровень 3</span>
+            <span class="nav-badge" id="navBadgeTP3">0/6</span>
+        </a>
+        <div class="nav-section-label">Инструменты</div>
+        <a class="nav-btn" href="grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span><span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span><span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/137</span>
+        </a>
+        <a class="nav-btn active" href="phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span><span class="nav-label">Фразы</span>
+        </a>
+        <div class="nav-section-label">Ещё</div>
+        <a class="nav-btn" href="index.html#settings" title="Настройки">
+            <span class="nav-icon">⚙️</span><span class="nav-label">Настройки</span>
+        </a>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+    <div class="pt-page" id="ptPage">
+
+        <div class="pt-header">
+            <h2>🧱 pali toki — конструктор фраз</h2>
+            <p>Соберите предложение на toki pona по схеме. Все фразы осмысленные и грамматически правильные.</p>
+        </div>
+
+        <div class="pt-stats">
+            <div class="pt-stat fire">
+                <div class="ps-num" id="ptStreak">0</div>
+                <div class="ps-lbl">Серия подряд</div>
+            </div>
+            <div class="pt-stat">
+                <div class="ps-num" id="ptCorrect">0</div>
+                <div class="ps-lbl">Правильно</div>
+            </div>
+            <div class="pt-stat">
+                <div class="ps-num" id="ptTotal">0</div>
+                <div class="ps-lbl">Всего попыток</div>
+            </div>
+            <div class="pt-stat gold">
+                <div class="ps-num" id="ptBest">0</div>
+                <div class="ps-lbl">Лучшая серия</div>
+            </div>
+        </div>
+
+        <div class="pt-schema">
+            <span class="sch-part s">S</span>
+            <span class="sch-arrow">+</span>
+            <span class="sch-part li">li</span>
+            <span class="sch-arrow">+</span>
+            <span class="sch-part v">V</span>
+            <span class="sch-arrow">+</span>
+            <span class="sch-part e">e</span>
+            <span class="sch-arrow">+</span>
+            <span class="sch-part o">O</span>
+            <div class="sch-note">подлежащее + li + действие + e + объект</div>
+        </div>
+
+        <div class="pt-controls">
+            <div class="pc-group">
+                <span class="pc-label">Уровень:</span>
+                <button class="pt-chip active" data-level="1">🔵 Простой</button>
+                <button class="pt-chip" data-level="2">🟣 Средний</button>
+                <button class="pt-chip" data-level="3">🟡 Сложный</button>
+                <button class="pt-chip" data-level="all">🎲 Микс</button>
+            </div>
+
+            <button class="pt-sp-toggle" id="ptSpToggle" type="button" title="Переключить шрифт на sitelen pona (S)">
+                <span class="sp-switch"></span>
+                <span class="sp-glyph-icon">toki</span>
+                <span class="sp-toggle-text">sitelen pona</span>
+            </button>
+        </div>
+
+        <div class="pt-card" id="ptCard">
+            <div class="pt-label">Соберите предложение на toki pona</div>
+            <div class="pt-prompt" id="ptPrompt">…</div>
+
+            <div class="pt-slots" id="ptSlots"></div>
+
+            <div class="pt-pool-label">Доступные слова</div>
+            <div class="pt-pool" id="ptPool"></div>
+
+            <div class="pt-feedback" id="ptFeedback"></div>
+
+            <div class="pt-actions">
+                <button class="pt-btn pt-btn-primary" id="ptCheck" disabled>✓ Проверить</button>
+                <button class="pt-btn pt-btn-secondary" id="ptHint">💡 Подсказка</button>
+                <button class="pt-btn pt-btn-ghost" id="ptNext">⏭ Следующее</button>
+            </div>
+
+            <div class="pt-kbd-hint">
+                <span class="pt-kbd">Enter</span> — проверить / следующее ·
+                <span class="pt-kbd">Backspace</span> — убрать слово ·
+                <span class="pt-kbd">S</span> — сменить шрифт
+            </div>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto • 2026</div>
+    </div>
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="data/courses-tp1.js"></script>
+<script src="data/courses-tp2.js"></script>
+<script src="data/courses-tp3.js"></script>
+<script src="data/words.js"></script>
+
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+
+<script>
+(function (global) {
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════
+   Конструктор фраз.
+   ВАЖНО: мы НЕ подменяем слова в HTML.
+   В HTML всегда лежит латинское слово (mi, toki, moku…).
+   При включённом режиме .pt-sp-mode на карточке CSS
+   применяет font-family: 'linja-pona', а шрифт через
+   OpenType-лигатуры сам превращает слово в глиф sitelen pona.
+   ═══════════════════════════════════════════════════════════ */
+
+function esc(s) {
+    return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ПОДЛЕЖАЩИЕ
+   ═══════════════════════════════════════════════════════════ */
+const SUBJ_SG = [
+    { tp: 'mi',       ru: 'я' },
+    { tp: 'sina',     ru: 'ты' },
+    { tp: 'ona',      ru: 'он / она' },
+    { tp: 'jan',      ru: 'человек' },
+    { tp: 'meli',     ru: 'женщина' },
+    { tp: 'mije',     ru: 'мужчина' },
+    { tp: 'soweli',   ru: 'зверь' },
+    { tp: 'waso',     ru: 'птица' },
+    { tp: 'kili',     ru: 'фрукт' },
+    { tp: 'tomo',     ru: 'дом' }
+];
+
+const SUBJ_PL = [
+    { tp: 'mi mute',      ru: 'мы' },
+    { tp: 'sina mute',    ru: 'вы' },
+    { tp: 'ona mute',     ru: 'они' },
+    { tp: 'jan mute',     ru: 'люди' },
+    { tp: 'soweli mute',  ru: 'звери' },
+    { tp: 'kili mute',    ru: 'фрукты' }
+];
+
+/* ═══════════════════════════════════════════════════════════
+   ГЛАГОЛЫ
+   ═══════════════════════════════════════════════════════════ */
+const VERBS = {
+    'moku':    { ru: 'ест / пьёт' },
+    'lukin':   { ru: 'видит' },
+    'kute':    { ru: 'слышит' },
+    'jo':      { ru: 'имеет' },
+    'toki':    { ru: 'говорит' },
+    'lape':    { ru: 'спит' },
+    'musi':    { ru: 'играет' },
+    'pali':    { ru: 'работает' },
+    'sona':    { ru: 'знает / учится' },
+    'sitelen': { ru: 'пишет / рисует' }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   СХЕМЫ
+   ═══════════════════════════════════════════════════════════ */
+const SCHEMAS = [
+    {
+        verb: 'moku',
+        objects: [
+            { tp: 'kili',      ru: 'фрукт' },
+            { tp: 'pan',       ru: 'хлеб' },
+            { tp: 'telo',      ru: 'воду' },
+            { tp: 'kili suwi', ru: 'сладкий фрукт' }
+        ]
+    },
+    {
+        verb: 'lukin',
+        objects: [
+            { tp: 'sina',   ru: 'тебя' },
+            { tp: 'jan',    ru: 'человека' },
+            { tp: 'soweli', ru: 'зверя' },
+            { tp: 'kili',   ru: 'фрукт' }
+        ]
+    },
+    {
+        verb: 'jo',
+        objects: [
+            { tp: 'kili',     ru: 'фрукт' },
+            { tp: 'tomo',     ru: 'дом' },
+            { tp: 'soweli',   ru: 'зверя' },
+            { tp: 'mani',     ru: 'деньги' },
+            { tp: 'ilo toki', ru: 'телефон' }
+        ]
+    },
+    {
+        verb: 'toki',
+        objects: [
+            { tp: 'tawa sina', ru: 'с тобой / к тебе' },
+            { tp: 'tawa mi',   ru: 'со мной / ко мне' },
+            { tp: 'tawa jan',  ru: 'с человеком' }
+        ]
+    },
+    {
+        verb: 'lape',
+        objects: [
+            { tp: 'lon supa', ru: 'на столе' },
+            { tp: 'lon tomo', ru: 'в доме' }
+        ]
+    },
+    {
+        verb: 'musi',
+        objects: [
+            { tp: 'lon ma',  ru: 'на улице' },
+            { tp: 'poka mi', ru: 'со мной' }
+        ]
+    },
+    {
+        verb: 'pali',
+        objects: [
+            { tp: 'e tomo', ru: 'строит дом' },
+            { tp: 'e ijo',  ru: 'делает вещь' }
+        ]
+    }
+];
+
+const SIMPLE_VERBS = ['moku', 'lukin', 'jo'];
+
+/* ═══════════════════════════════════════════════════════════
+   УТИЛИТЫ
+   ═══════════════════════════════════════════════════════════ */
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+
+function shuffle(a){
+    const r = [...a];
+    for (let i = r.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [r[i], r[j]] = [r[j], r[i]];
+    }
+    return r;
+}
+
+function buildSentenceParts(subj, verbInf, obj) {
+    const parts = subj.tp.split(' ');
+    const needsLi = !(subj.tp === 'mi' || subj.tp === 'sina');
+    if (needsLi) parts.push('li');
+    parts.push(verbInf);
+
+    const objParts = obj.tp.split(' ');
+    const objStartsSpecial = ['lon', 'tawa', 'poka'].indexOf(objParts[0]) !== -1;
+    if (!objStartsSpecial) parts.push('e');
+
+    parts.push(...objParts);
+    return parts;
+}
+
+function buildRussianTranslation(subj, verbInf, obj) {
+    return subj.ru + ' ' + (VERBS[verbInf] ? VERBS[verbInf].ru : verbInf) + ' ' + obj.ru;
+}
+
+function generateSentence(level) {
+    let verbInf;
+    if (level === 1) verbInf = pick(SIMPLE_VERBS);
+    else verbInf = pick(Object.keys(VERBS));
+
+    let schema = SCHEMAS.find(s => s.verb === verbInf);
+    if (!schema) {
+        schema = pick(SCHEMAS);
+        verbInf = schema.verb;
+    }
+
+    const usePlural = level !== 1 && Math.random() < 0.3;
+    const subj = pick(usePlural ? SUBJ_PL : SUBJ_SG);
+    const obj  = pick(schema.objects);
+
+    const correct = buildSentenceParts(subj, verbInf, obj);
+    const pool    = shuffle(correct.slice());
+    const ru      = buildRussianTranslation(subj, verbInf, obj);
+
+    return { correct, pool, ru };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   СОСТОЯНИЕ
+   ═══════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'va_tp_phrase_v1';
+let state = {
+    level: 1,
+    current: null,
+    built: [],
+    usedPoolIdx: new Set(),
+    checked: false,
+    streak: 0,
+    correct: 0,
+    total: 0,
+    best: 0,
+    spMode: false
+};
+let autoNextTimer = null;
+
+function loadState(){
+    try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const p = JSON.parse(raw);
+        state.streak  = p.streak  || 0;
+        state.correct = p.correct || 0;
+        state.total   = p.total   || 0;
+        state.best    = p.best    || 0;
+        state.level   = p.level   || 1;
+        state.spMode  = !!p.spMode;
+    }catch(e){}
+}
+function saveState(){
+    try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            streak:  state.streak,
+            correct: state.correct,
+            total:   state.total,
+            best:    state.best,
+            level:   state.level,
+            spMode:  state.spMode
+        }));
+    }catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DOM
+   ═══════════════════════════════════════════════════════════ */
+const $prompt   = document.getElementById('ptPrompt');
+const $slots    = document.getElementById('ptSlots');
+const $pool     = document.getElementById('ptPool');
+const $feedback = document.getElementById('ptFeedback');
+const $check    = document.getElementById('ptCheck');
+const $hint     = document.getElementById('ptHint');
+const $next     = document.getElementById('ptNext');
+const $streak   = document.getElementById('ptStreak');
+const $correct  = document.getElementById('ptCorrect');
+const $total    = document.getElementById('ptTotal');
+const $best     = document.getElementById('ptBest');
+const $spToggle = document.getElementById('ptSpToggle');
+const $card     = document.getElementById('ptCard');
+
+/* ═══════════════════════════════════════════════════════════
+   РЕНДЕР
+   ═══════════════════════════════════════════════════════════ */
+function renderStats(){
+    $streak.textContent  = state.streak;
+    $correct.textContent = state.correct;
+    $total.textContent   = state.total;
+    $best.textContent    = state.best;
+}
+
+function renderPrompt(){
+    if (!state.current) return;
+    $prompt.innerHTML = esc(state.current.ru) +
+        '<span class="pt-hint">Соберите это предложение на toki pona ↓</span>';
+}
+
+function renderSlots(){
+    if (state.built.length === 0){
+        $slots.classList.remove('has-words', 'correct', 'wrong');
+        $slots.innerHTML = '<span class="pt-slot-placeholder">Нажимайте слова ниже, чтобы собрать фразу</span>';
+        return;
+    }
+    $slots.classList.add('has-words');
+    /* В HTML всегда латинское слово. CSS сам применит linja-pona. */
+    $slots.innerHTML = state.built.map((w, i) =>
+        '<button type="button" class="pt-word" data-slot-idx="' + i + '">' + esc(w) + '</button>'
+    ).join('');
+    $slots.querySelectorAll('.pt-word').forEach(b =>
+        b.addEventListener('click', () => removeFromSlot(+b.dataset.slotIdx)));
+}
+
+function renderPool(){
+    if (!state.current) return;
+    $pool.innerHTML = state.current.pool.map((w, i) =>
+        '<button type="button" class="pt-pool-word" data-pool-idx="' + i + '">' + esc(w) + '</button>'
+    ).join('');
+    $pool.querySelectorAll('.pt-pool-word').forEach(b => {
+        const idx = +b.dataset.poolIdx;
+        if (state.usedPoolIdx.has(idx)) b.disabled = true;
+        b.addEventListener('click', () => addToSlot(idx));
+    });
+    updateCheckBtn();
+}
+
+function updateCheckBtn(){
+    const ok = state.current && state.built.length === state.current.correct.length;
+    $check.disabled = !ok || state.checked;
+}
+
+function clearFeedback(){
+    $feedback.classList.remove('show', 'ok', 'err');
+    $feedback.innerHTML = '';
+}
+
+/* Переключение класса .pt-sp-mode — вся магия в CSS */
+function applySpMode(){
+    $card.classList.toggle('pt-sp-mode', state.spMode);
+    $spToggle.classList.toggle('active', state.spMode);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ВЗАИМОДЕЙСТВИЕ
+   ═══════════════════════════════════════════════════════════ */
+function addToSlot(poolIdx){
+    if (state.checked || state.usedPoolIdx.has(poolIdx)) return;
+    const w = state.current.pool[poolIdx];
+    state.usedPoolIdx.add(poolIdx);
+    state.built.push(w);
+    renderSlots();
+    renderPool();
+}
+
+function removeFromSlot(slotIdx){
+    if (state.checked) return;
+    const w = state.built[slotIdx];
+    state.built.splice(slotIdx, 1);
+    for (let i = 0; i < state.current.pool.length; i++){
+        if (state.current.pool[i] === w && state.usedPoolIdx.has(i)){
+            state.usedPoolIdx.delete(i);
+            break;
+        }
+    }
+    renderSlots();
+    renderPool();
+}
+
+function check(){
+    if (state.checked) return;
+    if (state.built.length !== state.current.correct.length) return;
+
+    const ok = state.built.join(' ') === state.current.correct.join(' ');
+    state.checked = true;
+    state.total++;
+
+    $slots.classList.remove('has-words');
+    $slots.classList.add(ok ? 'correct' : 'wrong');
+
+    if (ok){
+        state.streak++;
+        state.correct++;
+        if (state.streak > state.best) state.best = state.streak;
+        $feedback.className = 'pt-feedback show ok';
+        $feedback.innerHTML = '✓ pona! <span class="pf-note">+1 к серии (' + state.streak + ')</span>';
+        renderStats();
+        saveState();
+        updateCheckBtn();
+        clearTimeout(autoNextTimer);
+        autoNextTimer = setTimeout(nextSentence, 1100);
+    } else {
+        state.streak = 0;
+        /* Латинское слово кладём как есть — CSS сам переключит шрифт. */
+        $feedback.className = 'pt-feedback show err';
+        $feedback.innerHTML = '✕ Не совсем. Правильно:' +
+            '<span class="pf-answer">' + esc(state.current.correct.join(' ')) + '</span>';
+        renderStats();
+        saveState();
+        updateCheckBtn();
+    }
+}
+
+function hint(){
+    if (state.checked || !state.current) return;
+    const correct = state.current.correct;
+    const built = state.built;
+
+    let idx = 0;
+    for (let i = 0; i < correct.length; i++){
+        if (i >= built.length || built[i] !== correct[i]) { idx = i; break; }
+        if (i === correct.length - 1) idx = correct.length;
+    }
+    if (idx >= correct.length) return;
+
+    const target = correct[idx];
+
+    /* Сравниваем по тексту кнопки — там всегда латиница, независимо от шрифта */
+    const btns = $pool.querySelectorAll('.pt-pool-word');
+    let found = false;
+    btns.forEach(b => {
+        if (found) return;
+        if (b.textContent === target && !b.disabled){
+            b.style.transition = 'box-shadow 0.2s ease';
+            b.style.boxShadow = '0 0 0 3px ' + getComputedStyle(document.documentElement).getPropertyValue('--green').trim();
+            setTimeout(() => { b.style.boxShadow = ''; }, 1500);
+            found = true;
+        }
+    });
+
+    if (found && global.VAToast) global.VAToast.show('Следующее слово: «' + target + '»');
+    else if (global.VAToast) global.VAToast.show('Проверьте уже поставленные слова');
+}
+
+function nextSentence(){
+    clearTimeout(autoNextTimer);
+    state.current = generateSentence(state.level);
+    state.built = [];
+    state.usedPoolIdx = new Set();
+    state.checked = false;
+    clearFeedback();
+    renderPrompt();
+    renderSlots();
+    renderPool();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ПЕРЕКЛЮЧАТЕЛЬ SITELEN PONA
+   ═══════════════════════════════════════════════════════════ */
+function toggleSpMode(){
+    state.spMode = !state.spMode;
+    saveState();
+    applySpMode();
+
+    /* Если сейчас показан правильный ответ — он тоже должен сменить шрифт.
+       Просто перерисовываем содержимое .pf-answer:
+       HTML не меняется, меняется только CSS-класс на .pt-card. */
+    /* Здесь ничего дополнительно делать не нужно — CSS уже применится. */
+
+    if (global.VAToast) {
+        global.VAToast.show(state.spMode
+            ? 'toki → ✦ sitelen pona'
+            : '✦ sitelen pona → toki');
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   СОБЫТИЯ
+   ═══════════════════════════════════════════════════════════ */
+$check.addEventListener('click', check);
+$hint.addEventListener('click', hint);
+$next.addEventListener('click', nextSentence);
+$spToggle.addEventListener('click', toggleSpMode);
+
+document.querySelectorAll('.pt-chip').forEach(c => {
+    c.addEventListener('click', () => {
+        document.querySelectorAll('.pt-chip').forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        const v = c.dataset.level;
+        state.level = v === 'all' ? 'all' : +v;
+        saveState();
+        nextSentence();
+    });
+});
+
+document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    if (e.key === 'Enter'){
+        e.preventDefault();
+        if (state.checked) nextSentence();
+        else if (state.current && state.built.length === state.current.correct.length) check();
+    } else if (e.key === 'Backspace'){
+        if (!state.checked && state.built.length > 0){
+            e.preventDefault();
+            removeFromSlot(state.built.length - 1);
+        }
+    } else if (e.key === 's' || e.key === 'S'){
+        if (!e.ctrlKey && !e.metaKey && !e.altKey){
+            toggleSpMode();
+        }
+    }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   ИНИЦИАЛИЗАЦИЯ
+   ═══════════════════════════════════════════════════════════ */
+function start(){
+    loadState();
+    renderStats();
+    applySpMode();
+
+    document.querySelectorAll('.pt-chip').forEach(c => {
+        const v = c.dataset.level;
+        const cmp = v === 'all' ? 'all' : +v;
+        c.classList.toggle('active', cmp === state.level);
+    });
+
+    nextSentence();
+}
+
+global.VAPhrases = { start, toggleSpMode };
+
+})(window);
+
+document.addEventListener('DOMContentLoaded', function () {
+    VACore.init();
+    VATheme.init();
+    window.VAPhrases.start();
+    VACore.updateNavBadges();
+    if (window.VATheme) VATheme.animatePageIn(document.getElementById('ptPage'));
+});
+</script>
+</body>
+</html>

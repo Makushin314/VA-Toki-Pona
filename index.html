@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="VA Toki Pona — тренажёр языка toki pona: 3 уровня, 21 урок, 137 слов, sitelen pona. Экосистема Vulpeto Abeleto." />
+<title>VA Toki Pona — o kama sona</title>
+<link rel="icon" href="images/VAlogo.png" type="image/png" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/home.css" />
+
+<script>
+(function () {
+    try {
+        var THEMES = {
+            dark:   { '--bg':'#0D110F','--card':'#151A17','--card2':'#1C231E','--input':'#202821','--border':'#29332C','--text':'#F3F6F3','--muted':'#9CA79E','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            light:  { '--bg':'#F2F6F2','--card':'#FFFFFF','--card2':'#F7FAF7','--input':'#EEF3EE','--border':'#D9E2D9','--text':'#172019','--muted':'#68736B','--green':'#00A000','--green-hover':'#00B800','--danger':'#D9534F' },
+            winter: { '--bg':'#0B1520','--card':'#132234','--card2':'#182B40','--input':'#1D344C','--border':'#274562','--text':'#EAF4FB','--muted':'#8FA8C0','--green':'#4DA6FF','--green-hover':'#6BB8FF','--danger':'#E85D75' },
+            forest: { '--bg':'#0A130E','--card':'#122018','--card2':'#17291F','--input':'#1C3126','--border':'#253D2F','--text':'#E8F2E8','--muted':'#8FAF93','--green':'#2E8B57','--green-hover':'#3DA66A','--danger':'#C9645B' },
+            autumn: { '--bg':'#1A1210','--card':'#241A15','--card2':'#2E211B','--input':'#342720','--border':'#42332A','--text':'#F5EDE5','--muted':'#B8A398','--green':'#D2691E','--green-hover':'#E67E22','--danger':'#C0392B' },
+            cat:    { '--bg':'#14101C','--card':'#1C1826','--card2':'#231E30','--input':'#2A2338','--border':'#3A2F4A','--text':'#F0EAF5','--muted':'#9C93B0','--green':'#F5A623','--green-hover':'#FFB84D','--danger':'#E85D75' }
+        };
+        var root = document.documentElement;
+        var themeKey = localStorage.getItem('va_tp_theme') || 'dark';
+        var theme = THEMES[themeKey] || THEMES.dark;
+        root.setAttribute('data-theme-key', themeKey);
+        for (var k in theme) {
+            if (Object.prototype.hasOwnProperty.call(theme, k)) {
+                root.style.setProperty(k, theme[k]);
+            }
+        }
+        var pos = localStorage.getItem('va_tp_sidebar_pos');
+        if (!pos) pos = window.innerWidth <= 700 ? 'top' : 'left';
+        if (pos !== 'left' && pos !== 'top') pos = 'left';
+        root.setAttribute('data-sidebar-pos', pos);
+
+        setTimeout(function () {
+            if (!document.documentElement.hasAttribute('data-nav-ready')) {
+                document.documentElement.setAttribute('data-nav-ready', '1');
+            }
+        }, 1200);
+    } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<aside class="sidebar">
+    <a class="logo" href="index.html" title="VA Toki Pona — на главную">
+        <div class="logo-icon">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 2 L60 36.25 L95.65 35.17 L66.17 55.25 L78.21 88.83 L50 67 L21.79 88.83 L33.83 55.25 L4.35 35.17 L40 36.25 Z"/>
+    </svg>
+</div>
+        <div class="logo-text">
+            <h1>VA Toki Pona</h1>
+            <span>o kama sona</span>
+        </div>
+    </a>
+
+    <nav id="nav">
+        <a class="nav-btn active" href="index.html" title="Главная">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Главная</span>
+        </a>
+
+        <div class="nav-section-label">Обучение</div>
+        <a class="nav-btn" href="courses/tp1.html" title="nanpa wan">
+            <span class="nav-icon">🔵</span>
+            <span class="nav-label">Уровень 1</span>
+            <span class="nav-badge" id="navBadgeTP1">0/8</span>
+        </a>
+        <a class="nav-btn" href="courses/tp2.html" title="nanpa tu">
+            <span class="nav-icon">🟣</span>
+            <span class="nav-label">Уровень 2</span>
+            <span class="nav-badge" id="navBadgeTP2">0/7</span>
+        </a>
+        <a class="nav-btn" href="courses/tp3.html" title="nanpa mute">
+            <span class="nav-icon">🟡</span>
+            <span class="nav-label">Уровень 3</span>
+            <span class="nav-badge" id="navBadgeTP3">0/6</span>
+        </a>
+
+        <div class="nav-section-label">Инструменты</div>
+        <a class="nav-btn" href="grammar.html" title="Грамматика">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">Грамматика</span>
+        </a>
+        <a class="nav-btn" href="flashcards.html" title="Слова">
+            <span class="nav-icon">🃏</span>
+            <span class="nav-label">Слова</span>
+            <span class="nav-badge" id="navBadgeWords">0/137</span>
+        </a>
+        <a class="nav-btn" href="phrases.html" title="Конструктор фраз">
+            <span class="nav-icon">🧱</span>
+            <span class="nav-label">Фразы</span>
+        </a>
+
+        <div class="nav-section-label">Ещё</div>
+        <button class="nav-btn" data-page="settings" title="Настройки">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Настройки</span>
+        </button>
+    </nav>
+</aside>
+
+<main class="content" id="content">
+
+    <!-- ─── ГЛАВНАЯ ─── -->
+    <section class="page active" id="page-home">
+        <div class="page-header">
+            <h2 id="homeGreeting">toki!</h2>
+            <p>o kama sona e toki pona — учи простой язык добра</p>
+        </div>
+
+        <div id="continueCard"></div>
+
+        <div class="hero">
+            <div class="hero-greeting" id="heroName">toki, jan sona! 👋</div>
+            <div class="hero-sub">o awen sona — продолжай учиться, главное — регулярность</div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hs-num" id="hsLessons">0</div>
+                    <div class="hs-lbl">Уроков пройдено</div>
+                </div>
+                <div class="hero-stat fire">
+                    <div class="hs-num" id="hsStreak">0🔥</div>
+                    <div class="hs-lbl">Серия дней</div>
+                </div>
+                <div class="hero-stat gold">
+                    <div class="hs-num" id="hsXp">0</div>
+                    <div class="hs-lbl">XP всего</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hs-num" id="hsWords">0</div>
+                    <div class="hs-lbl">Слов изучено</div>
+                </div>
+            </div>
+
+            <div class="goal-row">
+                <span style="font-size:20px;">🎯</span>
+                <div class="goal-bar">
+                    <div class="goal-bar-fill" id="goalFill" style="width:0%;"></div>
+                </div>
+                <span class="goal-text" id="goalText">0 / 20 XP сегодня</span>
+            </div>
+        </div>
+
+        <div class="section-title">sona — уровни</div>
+        <div class="levels-grid" id="levelsGrid"></div>
+
+        <div class="section-title">soweli pona — достижения</div>
+        <div class="ach-grid" id="achGrid"></div>
+
+        <div class="section-title">ilo — инструменты</div>
+        <div class="quick-links">
+            <a class="quick-link" href="grammar.html">
+                <span class="ql-icon">📖</span>
+                <span class="ql-name">Грамматика</span>
+                <span class="ql-desc">Справочник по грамматике</span>
+            </a>
+            <a class="quick-link" href="flashcards.html">
+                <span class="ql-icon">🃏</span>
+                <span class="ql-name">Слова 166</span>
+                <span class="ql-desc">Слова и sitelen pona</span>
+            </a>
+            <a class="quick-link" href="courses/tp1.html">
+                <span class="ql-icon">🔵</span>
+                <span class="ql-name">Уровень 1</span>
+                <span class="ql-desc">Начать с первого уровня</span>
+            </a>
+            <a class="quick-link" href="courses/tp3.html">
+                <span class="ql-icon">🟡</span>
+                <span class="ql-name">Уровень 3</span>
+                <span class="ql-desc">Продвинутый уровень</span>
+            </a>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto • 2026</div>
+    </section>
+
+    <!-- ─── НАСТРОЙКИ ─── -->
+    <section class="page" id="page-settings">
+        <div class="page-header">
+            <h2>⚙️ Настройки</h2>
+            <p>Персонализация и управление данными</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">👤 Профиль</div>
+            <div class="card-sub">Как к тебе обращаться и какая цель на день</div>
+            <div class="field-group">
+                <label for="profileName">Имя</label>
+                <input type="text" id="profileName" placeholder="Твоё имя" maxlength="30" autocomplete="off" />
+            </div>
+            <div class="field-group">
+                <label for="profileGoal">Дневная цель (XP)</label>
+                <select id="profileGoal">
+                    <option value="10">10 XP — лёгкая</option>
+                    <option value="20">20 XP — стандарт</option>
+                    <option value="30">30 XP — средняя</option>
+                    <option value="50">50 XP — серьёзная</option>
+                    <option value="100">100 XP — хардкор</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🎨 Оформление</div>
+            <div class="card-sub">Выберите тему приложения</div>
+            <div class="theme-picker" id="themePicker"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📐 Расположение панели</div>
+            <div class="card-sub">Где разместить меню навигации</div>
+            <div class="sidebar-pos-picker" id="sidebarPosPicker">
+                <div class="sidebar-pos-option" data-pos="left">
+                    <div class="pos-icon">◀</div>
+                    <div class="pos-name">Слева</div>
+                </div>
+                <div class="sidebar-pos-option" data-pos="top">
+                    <div class="pos-icon">▲</div>
+                    <div class="pos-name">Сверху</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">ℹ️ О программе</div>
+            <p style="color:var(--muted); font-size:14px; line-height:1.7;">
+                <b style="color:var(--text);">VA Toki Pona</b> — тренажёр языка toki pona:<br>
+                3 уровня (nanpa wan / tu / mute), 21 урок, 137 слов (nimi pu + nimi ku suli),
+                sitelen pona, конструктор фраз и SRS-карточки.<br><br>
+                Входит в экосистему клуба <b style="color:var(--green);">Vulpeto Abeleto</b>.<br>
+                Все данные хранятся локально в вашем браузере. Ничего никуда не отправляется.<br><br>
+
+                <b style="color:var(--green);">Шрифт sitelen pona:</b>
+                <b style="color:var(--text);">linja laso</b> от
+                <b style="color:var(--text);">mute ante</b>
+                (<a href="mailto:muteante@gmail.com" style="color:var(--green); text-decoration:none;">muteante@gmail.com</a>).<br>
+                Лицензия: SIL Open Font License 1.1.<br><br>
+
+                <b style="color:var(--green);">o kama sona pona! 🌍</b>
+            </p>
+        </div>
+
+        <div class="page-footer">Vulpeto Abeleto • 2026</div>
+    </section>
+
+</main>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data/courses-tp1.js"></script>
+<script src="data/courses-tp2.js"></script>
+<script src="data/courses-tp3.js"></script>
+<script src="data/words.js"></script>
+
+<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/home.js"></script>
+<script src="js/settings.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    VACore.init();
+    VATheme.init();
+    VAHome.render();
+    VASettings.init();
+
+    function activatePage(pageId) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector('.nav-btn[data-page="' + pageId + '"]');
+        if (activeBtn) activeBtn.classList.add('active');
+
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById('page-' + pageId);
+        if (target) {
+            target.classList.add('active');
+            VATheme.animatePageIn(target);
+        }
+
+        if (pageId === 'settings') {
+            VASettings.render();
+            VATheme.renderPicker();
+            VATheme.renderSidebarPosPicker();
+        }
+
+        const content = document.getElementById('content');
+        if (content) content.scrollTop = 0;
+
+        if (history.replaceState) {
+            const hash = pageId === 'settings' ? '#settings' : '';
+            history.replaceState(null, '', window.location.pathname + hash);
+        }
+    }
+
+    document.querySelectorAll('.nav-btn[data-page]').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            activatePage(btn.dataset.page);
+        });
+    });
+
+    document.querySelectorAll('.nav-btn[href="index.html"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            activatePage('home');
+        });
+    });
+
+    if (window.location.hash === '#settings') {
+        activatePage('settings');
+    }
+
+    window.addEventListener('hashchange', function () {
+        if (window.location.hash === '#settings') {
+            activatePage('settings');
+        } else if (window.location.hash === '' || window.location.hash === '#home') {
+            activatePage('home');
+        }
+    });
+});
+</script>
+</body>
+</html>
