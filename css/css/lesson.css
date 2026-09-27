@@ -1,0 +1,1019 @@
+/* ============================================================
+   VA TOKI PONA — LESSON
+   Страницы курсов, уроки, тесты, конструкторы, аудирование
+   Экосистема Vulpeto Abeleto · 2026
+   ============================================================ */
+
+/* ─── СПИСОК УРОКОВ ─── */
+.lesson-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lesson-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all var(--transition);
+    color: inherit;
+    text-decoration: none;
+}
+.lesson-item:hover {
+    border-color: var(--green);
+    background: var(--card2);
+    transform: translateX(4px);
+}
+.lesson-item.done {
+    background: var(--card2);
+    border-color: rgba(0, 160, 0, 0.3);
+}
+
+.lesson-num {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--input);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: all var(--transition);
+    border: 1px solid var(--border);
+}
+.lesson-item.done .lesson-num {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(0, 160, 0, 0.25);
+}
+
+.lesson-info {
+    flex: 1;
+    min-width: 0;
+}
+.lesson-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+.lesson-meta {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.lesson-arrow {
+    color: var(--muted);
+    font-size: 22px;
+    flex-shrink: 0;
+    font-weight: 300;
+    transition: transform var(--transition);
+}
+.lesson-item:hover .lesson-arrow {
+    transform: translateX(4px);
+    color: var(--green);
+}
+
+/* ─── ЗАГОЛОВОК УРОКА ─── */
+.lesson-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.lesson-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    transition: color var(--transition);
+    text-decoration: none;
+    cursor: pointer;
+}
+.lesson-back:hover { color: var(--green); }
+
+.lesson-header .lh-badge {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.lesson-header h2 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.25;
+}
+
+.lesson-header .lh-sub {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   КОНТЕНТ УРОКА (теория)
+   ═══════════════════════════════════════════════════════════ */
+
+.lesson-content {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+}
+
+/* Заголовки внутри урока */
+.lesson-content h3 {
+    font-size: 19px;
+    font-weight: 800;
+    margin: 26px 0 12px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.35;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+.lesson-content h3:first-child {
+    margin-top: 0;
+}
+.lesson-content h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--green);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.lesson-content h4 {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 20px 0 10px;
+    color: var(--green);
+    line-height: 1.4;
+}
+
+/* Абзацы */
+.lesson-content p {
+    margin-bottom: 14px;
+    line-height: 1.75;
+}
+.lesson-content p:last-child { margin-bottom: 0; }
+
+/* Списки */
+.lesson-content ul,
+.lesson-content ol {
+    margin: 10px 0 16px 24px;
+    line-height: 1.75;
+}
+.lesson-content li {
+    margin-bottom: 8px;
+    padding-left: 4px;
+}
+.lesson-content li::marker {
+    color: var(--green);
+    font-weight: 700;
+}
+.lesson-content ul li::marker {
+    content: '▸  ';
+}
+
+/* Жирный и курсив */
+.lesson-content b,
+.lesson-content strong {
+    color: var(--text);
+    font-weight: 700;
+}
+.lesson-content i,
+.lesson-content em {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* Инлайн-код */
+.lesson-content code {
+    background: var(--input);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13.5px;
+    color: var(--green);
+    font-weight: 700;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+/* ─── ТОКИ ПОНА (слово) И РУССКИЙ (перевод) ─── */
+.lesson-content .tp,
+.lesson-content .eo {
+    color: var(--green);
+    font-weight: 700;
+    font-style: normal;
+}
+.lesson-content .ru {
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* ─── ПРИМЕРЫ В УРОКЕ ─── */
+.lesson-example {
+    background: var(--input);
+    border-left: 3px solid var(--green);
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin: 8px 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text);
+}
+.lesson-example .tp,
+.lesson-example .eo {
+    color: var(--green);
+    font-weight: 700;
+    font-style: normal;
+}
+.lesson-example .ru {
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* ─── ДИАЛОГ В УРОКЕ ─── */
+.lesson-dialog {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin: 12px 0;
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: var(--text);
+}
+.lesson-dialog b {
+    color: var(--green);
+    font-weight: 700;
+}
+.lesson-dialog .ru {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* ─── ТАБЛИЦЫ В УРОКЕ ─── */
+.lesson-content table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 14px 0 18px;
+    font-size: 14px;
+    background: var(--input);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.lesson-content thead {
+    background: var(--card2);
+}
+
+.lesson-content th {
+    background: var(--card2);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.3;
+}
+
+.lesson-content td {
+    padding: 11px 16px;
+    border-top: 1px solid var(--border);
+    line-height: 1.55;
+    vertical-align: top;
+}
+
+.lesson-content tbody tr:first-child td {
+    border-top: none;
+}
+.lesson-content tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Первая колонка часто — ключевое слово (toki pona) */
+.lesson-content td:first-child {
+    color: var(--green);
+    font-weight: 700;
+}
+
+/* ─── БЛОК «СОВЕТ» ─── */
+.lesson-tip {
+    background: var(--card2);
+    border-left: 4px solid var(--green);
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    margin: 18px 0;
+}
+.lesson-tip b { color: var(--green); font-weight: 800; }
+.lesson-tip .tp,
+.lesson-tip .eo {
+    color: var(--green);
+    font-weight: 700;
+}
+.lesson-tip .ru {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* ─── БЛОК КНОПОК ВНИЗУ УРОКА ─── */
+.lesson-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   УПРАЖНЕНИЯ / ТЕСТЫ
+   ═══════════════════════════════════════════════════════════ */
+
+.exercise {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 14px;
+    transition: border var(--transition);
+}
+.exercise:first-of-type { margin-top: 0; }
+.exercise + .exercise { margin-top: 12px; }
+
+.exercise-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.exercise-q {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.55;
+    color: var(--text);
+}
+.exercise-q .tp,
+.exercise-q .eo {
+    color: var(--green);
+    font-weight: 700;
+}
+
+.exercise-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.exercise-option {
+    background: var(--input);
+    border: 2px solid transparent;
+    border-radius: 11px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all var(--transition);
+    text-align: left;
+    color: var(--text);
+    font-family: inherit;
+    width: 100%;
+    line-height: 1.45;
+}
+.exercise-option:hover:not(.disabled) {
+    border-color: var(--muted);
+    transform: translateX(2px);
+}
+.exercise-option.correct {
+    border-color: var(--green);
+    background: rgba(0, 160, 0, 0.12);
+    color: var(--green);
+    font-weight: 800;
+}
+.exercise-option.wrong {
+    border-color: var(--danger);
+    background: rgba(217, 83, 79, 0.12);
+    color: var(--danger);
+}
+.exercise-option.disabled {
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.exercise-result {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    display: none;
+    line-height: 1.5;
+}
+.exercise-result.show { display: block; animation: fadeSlide 0.25s ease; }
+.exercise-result.ok {
+    background: rgba(0, 160, 0, 0.12);
+    color: var(--green);
+    border-left: 3px solid var(--green);
+}
+.exercise-result.err {
+    background: rgba(217, 83, 79, 0.12);
+    color: var(--danger);
+    border-left: 3px solid var(--danger);
+}
+
+/* ─── ВВОД ОТВЕТА ─── */
+.test-input {
+    width: 100%;
+    background: var(--input);
+    border: 2px solid var(--border);
+    border-radius: 11px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+    transition: border var(--transition);
+    line-height: 1.4;
+}
+.test-input:focus { border-color: var(--green); }
+.test-input::placeholder { color: var(--muted); opacity: 0.7; }
+
+/* ─── АУДИРОВАНИЕ ─── */
+.audio-btn {
+    background: var(--input);
+    border: 1.5px solid var(--border);
+    color: var(--green);
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    transition: all var(--transition);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+.audio-btn:hover {
+    background: var(--card2);
+    border-color: var(--green);
+    transform: scale(1.03);
+}
+.audio-btn:active { transform: scale(0.98); }
+
+.listen-translation {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(0, 160, 0, 0.08);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    border-left: 3px solid var(--green);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   КОНСТРУКТОР ФРАЗ
+   ═══════════════════════════════════════════════════════════ */
+
+.builder-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 14px;
+}
+.builder-item:first-of-type { margin-top: 0; }
+
+.builder-translation {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.builder-slots {
+    min-height: 52px;
+    background: var(--input);
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 12px;
+    transition: border var(--transition);
+}
+.builder-slots:has(.builder-slot) {
+    border-style: solid;
+    border-color: var(--green);
+    background: rgba(0, 160, 0, 0.05);
+}
+
+.builder-placeholder {
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.7;
+    padding: 4px 8px;
+}
+
+.builder-slot {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+}
+.builder-slot:hover {
+    background: var(--danger);
+    transform: scale(1.05);
+}
+.builder-slot::after {
+    content: ' ✕';
+    opacity: 0.7;
+    font-size: 11px;
+}
+
+.builder-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.builder-word {
+    background: var(--input);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: inherit;
+    line-height: 1.3;
+}
+.builder-word:hover:not(:disabled) {
+    border-color: var(--green);
+    color: var(--green);
+    transform: translateY(-2px);
+}
+.builder-word:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+/* ─── RESPONSIVE ДЛЯ УРОКА ─── */
+@media (max-width: 700px) {
+    .lesson-content {
+        padding: 20px 18px;
+        font-size: 14.5px;
+    }
+    .lesson-content h3 {
+        font-size: 17px;
+        margin: 22px 0 10px;
+    }
+    .lesson-content h4 { font-size: 15px; }
+    .lesson-content table {
+        font-size: 13px;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    .lesson-content th,
+    .lesson-content td {
+        padding: 9px 12px;
+    }
+    .lesson-header {
+        padding: 18px;
+    }
+    .lesson-header h2 { font-size: 20px; }
+
+    .lesson-example {
+        padding: 9px 13px;
+        font-size: 14px;
+    }
+    .lesson-dialog {
+        padding: 11px 15px;
+        font-size: 14px;
+        line-height: 1.75;
+    }
+
+    .exercise { padding: 14px 16px; }
+    .exercise-q { font-size: 14.5px; }
+
+    .builder-item { padding: 14px 16px; }
+    .builder-word { padding: 7px 12px; font-size: 13px; }
+    .builder-slot { padding: 5px 10px; font-size: 13px; }
+
+    .lesson-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .lesson-footer .btn { width: 100%; }
+
+    .lesson-item { padding: 14px 16px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   СВОРАЧИВАЕМЫЕ БЛОКИ УРОКА
+   ═══════════════════════════════════════════════════════════ */
+
+.lesson-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: border var(--transition);
+}
+.lesson-block[open] { border-color: var(--border); }
+
+.lesson-block > summary {
+    list-style: none;
+    padding: 18px 26px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+    transition: background var(--transition);
+    position: relative;
+    line-height: 1.3;
+}
+.lesson-block > summary::-webkit-details-marker { display: none; }
+.lesson-block > summary::marker { display: none; content: ''; }
+
+.lesson-block > summary::after {
+    content: '';
+    position: absolute;
+    right: 26px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: translateY(-70%) rotate(45deg);
+    transition: transform var(--transition);
+}
+.lesson-block[open] > summary::after {
+    transform: translateY(-30%) rotate(-135deg);
+}
+.lesson-block > summary:hover { background: var(--card2); }
+
+.lesson-block > summary .lb-emoji {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+.lesson-block > summary .lb-title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.lesson-block > summary .lb-count {
+    background: var(--input);
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-right: 24px;
+    flex-shrink: 0;
+    line-height: 1.3;
+}
+.lesson-block[open] > summary .lb-count {
+    background: rgba(0, 160, 0, 0.15);
+    color: var(--green);
+}
+
+.lesson-block-body {
+    padding: 0 26px 22px;
+}
+
+/* ─── Навигация по блокам урока ─── */
+.lesson-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+.lesson-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--input);
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: all var(--transition);
+    border: 1px solid transparent;
+}
+.lesson-nav a:hover {
+    background: var(--card2);
+    color: var(--text);
+    border-color: var(--border);
+}
+.lesson-nav a .ln-num {
+    background: var(--green);
+    color: #fff;
+    font-size: 10.5px;
+    padding: 1px 7px;
+    border-radius: 6px;
+    font-weight: 800;
+}
+
+/* ─── Кнопки «Свернуть всё / Развернуть всё» ─── */
+.lesson-toggle-all {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.lesson-toggle-all .btn-mini {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.lesson-toggle-all .btn-mini:hover {
+    background: var(--border);
+    color: var(--text);
+}
+
+@media (max-width: 700px) {
+    .lesson-block > summary {
+        padding: 14px 18px;
+        font-size: 15px;
+    }
+    .lesson-block > summary .lb-count {
+        margin-right: 20px;
+        font-size: 10.5px;
+        padding: 2px 8px;
+    }
+    .lesson-block > summary::after { right: 18px; }
+    .lesson-block-body { padding: 0 16px 18px; }
+    .lesson-nav {
+        padding: 10px 12px;
+        gap: 6px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
+    }
+    .lesson-nav::-webkit-scrollbar { display: none; }
+    .lesson-nav a { flex-shrink: 0; font-size: 12px; padding: 6px 11px; }
+}
+/* ═══════════════════════════════════════════════════════════
+   SITELEN PONA — тумблер и режим отображения
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Кнопка-тумблер в шапке урока ─── */
+.lesson-toggle-all .btn-mini.sp-toggle-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    color: var(--muted);
+    border-color: var(--border);
+    white-space: nowrap;
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(0, 160, 0, 0.25);
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn.active:hover {
+    background: var(--green-hover);
+    color: #fff;
+}
+
+/* Переключатель внутри кнопки */
+.lesson-toggle-all .sp-switch {
+    position: relative;
+    width: 28px;
+    height: 16px;
+    background: var(--border);
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: background var(--transition);
+}
+.lesson-toggle-all .sp-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform var(--transition);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn.active .sp-switch {
+    background: rgba(255, 255, 255, 0.35);
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn.active .sp-switch::after {
+    transform: translateX(12px);
+}
+
+/* Иконка «toki» в шрифте linja-pona */
+.lesson-toggle-all .sp-toggle-icon {
+    font-family: 'linja-pona', 'Segoe UI Symbol', sans-serif;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--green);
+    transition: color var(--transition);
+}
+.lesson-toggle-all .btn-mini.sp-toggle-btn.active .sp-toggle-icon {
+    color: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   РЕЖИМ SITELEN PONA
+   Класс .sp-mode вешается на #courseRoot. Все toki-pona-элементы
+   получают шрифт linja-pona, который через OpenType-лигатуры
+   превращает латинские слова (toki, pona, mi…) в глифы.
+   Русский текст откатывается на системный шрифт per-character.
+   ═══════════════════════════════════════════════════════════ */
+
+/* 1. Точки, где toki pona явно помечен */
+#courseRoot.sp-mode .tp,
+#courseRoot.sp-mode .eo,
+#courseRoot.sp-mode code,
+#courseRoot.sp-mode span[style*="var(--danger)"] {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', sans-serif;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+    font-weight: normal;
+    font-size: 1.35em;
+    line-height: 1;
+    letter-spacing: 0;
+    vertical-align: -0.15em;
+    white-space: nowrap;
+}
+#courseRoot.sp-mode code {
+    padding: 2px 8px;
+    font-size: 1.2em;
+}
+
+/* 2. Целые блоки примеров и диалогов: применяем шрифт ко всему
+      блоку. Кириллица откатывается на Segoe UI посимвольно,
+      а латинские toki-pona-фразы превращаются в глифы. */
+#courseRoot.sp-mode .lesson-example,
+#courseRoot.sp-mode .lesson-dialog,
+#courseRoot.sp-mode .lesson-tip {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+}
+/* Внутри этих блоков .tp-спаны не увеличиваем дважды */
+#courseRoot.sp-mode .lesson-example .tp,
+#courseRoot.sp-mode .lesson-example .eo,
+#courseRoot.sp-mode .lesson-dialog .tp,
+#courseRoot.sp-mode .lesson-dialog .eo,
+#courseRoot.sp-mode .lesson-tip .tp,
+#courseRoot.sp-mode .lesson-tip .eo {
+    font-size: 1.15em;
+    vertical-align: -0.08em;
+}
+
+/* 3. Упражнения и конструктор: слова в кнопках */
+#courseRoot.sp-mode .exercise-q .tp,
+#courseRoot.sp-mode .exercise-q .eo {
+    font-size: 1.35em;
+}
+#courseRoot.sp-mode .builder-word,
+#courseRoot.sp-mode .builder-slot {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', sans-serif;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 0;
+    padding: 8px 12px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* 4. Мобильная адаптация */
+@media (max-width: 700px) {
+    .lesson-toggle-all {
+        flex-wrap: wrap;
+    }
+    .lesson-toggle-all .btn-mini.sp-toggle-btn {
+        margin-left: 0;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+    #courseRoot.sp-mode .tp,
+    #courseRoot.sp-mode .eo,
+    #courseRoot.sp-mode code,
+    #courseRoot.sp-mode span[style*="var(--danger)"] {
+        font-size: 1.25em;
+    }
+    #courseRoot.sp-mode .builder-word,
+    #courseRoot.sp-mode .builder-slot {
+        font-size: 16px;
+    }
+}
+/* ─── Ячейка «sitelen pona» в таблицах уроков ─── */
+.lesson-content .sp-cell {
+    text-align: center;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: normal;
+    color: var(--green);
+    min-width: 56px;
+    white-space: nowrap;
+}
+
+/* В режиме sp-mode ячейка рендерится шрифтом linja-pona */
+#courseRoot.sp-mode .lesson-content .sp-cell {
+    font-family: 'linja-pona', 'Segoe UI Symbol', 'Apple Symbols', sans-serif;
+    font-feature-settings: "liga" 1, "clig" 1, "calt" 1, "rlig" 1;
+}
+
+@media (max-width: 700px) {
+    .lesson-content .sp-cell { font-size: 24px; min-width: 40px; }
+}
